@@ -1,25 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+// src/App.js
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import Header from './Components/Header';
+import Auth from './Components/Auth';
+import ActivityList from './components/ActivityList';
+import AuthProvider, { AuthContext } from './context/AuthContext';
 
-function App() {
+const PrivateRoute = ({ children }) => {
+  const { token } = React.useContext(AuthContext);
+  return token ? children : <Navigate to="/auth" />;
+};
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AuthProvider>
+      <Router>
+        <Header />
+        <div className="container">
+          <Routes>
+            <Route path="/auth" element={<Auth />} />
+            <Route
+              path="/"
+              element={
+                <PrivateRoute>
+                  <ActivityList />
+                </PrivateRoute>
+              }
+            />
+          </Routes>
+        </div>
+      </Router>
+    </AuthProvider>
   );
-}
+};
 
 export default App;
