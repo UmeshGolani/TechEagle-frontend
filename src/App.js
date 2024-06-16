@@ -3,7 +3,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Header from './Components/Header';
 import Auth from './Components/Auth';
-import ActivityList from './components/ActivityList';
+import ActivityList from './Components/ActivityList';
 import AuthProvider, { AuthContext } from './context/AuthContext';
 
 const PrivateRoute = ({ children }) => {
